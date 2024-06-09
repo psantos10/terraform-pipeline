@@ -1,0 +1,20 @@
+name: "Dev Deploy"
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    uses: ./.github/workflows/terraform.yml
+    with:
+      environment: dev
+      aws-assume-role-arn: "arn:aws:iam::974641288138:role/github-actions-psantos10-pipeline"
+      aws-region: "eu-central-1"
+      aws-s3-bucket-statefile: "psantos10-eu-central-1-terraform-statefile"
+      aws-dynamodb-lock-table: "psantos10-eu-central-1-terraform-lock"
